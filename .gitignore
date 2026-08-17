@@ -1,0 +1,13 @@
+# Generated workbooks
+output/
+*.xlsx
+
+# Locally vendored PowerShell modules (see README for offline install)
+modules/
+
+# Credentials files used for multi-PC runs
+pcs.csv
+*credentials*.csv
+*credentials*.xlsx
+
+.DS_Store
