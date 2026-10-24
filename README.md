@@ -1,4 +1,19 @@
-# Nutanix Prism Central Inventory — PowerShell
+<div align="center">
+
+# <img src="https://cdn.simpleicons.org/nutanix/7855FA" alt="" height="34" align="top"> Nutanix Prism Central Inventory (PowerShell)
+
+### Your whole estate in one Excel workbook: clusters, hosts, VMs, storage, networks, DR and licences
+
+[![PowerShell](https://img.shields.io/badge/PowerShell-7%20%7C%205.1-5391FE?logo=powershell&logoColor=white)](https://learn.microsoft.com/powershell/)
+[![Nutanix Prism v4](https://img.shields.io/badge/Nutanix-Prism%20v4-red)](https://developers.nutanix.com/)
+[![Read-only](https://img.shields.io/badge/cluster%20access-read--only-brightgreen)](#how-it-works)
+[![No SDK](https://img.shields.io/badge/dependencies-ImportExcel%20only-lightgrey)](#requirements)
+
+*Point it at one or more Prism Centrals → get a 12-sheet, colour-coded workbook per PC.*
+
+</div>
+
+---
 
 PowerShell port of the `cluster_inventory_v4` Python tool. Connects to one or
 more Prism Centrals over the **v4 REST API** and writes a formatted, timestamped
@@ -6,6 +21,18 @@ Excel workbook per PC.
 
 Feature parity with the Python version: same sheets, same columns, same derived
 values and the same colour coding.
+
+## How it works
+
+```mermaid
+flowchart LR
+  pcs["One or more PCs<br/>(prompt, flags, CSV or env)"] --> probe["Probe each v4 namespace<br/>and pin its version"]
+  probe --> collect["Collect clusters, hosts, disks,<br/>VMs, storage, networks, DR, alerts, licences"]
+  collect --> stats["Per-VM 24h stats<br/>3 parallel workers on PS 7"]
+  stats --> book["Workbook per PC<br/>Summary + 11 detail sheets"]
+```
+
+Every request is a `GET`. The tool never changes anything on Prism Central or the clusters, so it is safe to run against production.
 
 ## Requirements
 
@@ -168,3 +195,14 @@ NtnxPcInventory/
   Collector.ps1                 API calls and row shaping
   ExcelExport.ps1               Workbook builder
 ```
+
+---
+
+### More Nutanix tools
+
+- [Cluster Utilization Report](https://github.com/guranshdeol/nutanix-cluster-usage-report): 30-day CPU, memory and storage per cluster
+- [Multi-Cluster Command Runner](https://github.com/guranshdeol/nutanix-multi-cluster-command-runner): run one shell command on every cluster
+- [VLAN Migrator](https://github.com/guranshdeol/nutanix-vlan-migrator): Basic to Advanced subnet migration, with validation
+- [SSH Consent Banner](https://github.com/guranshdeol/nutanix-ahv-cvm-custom-banner): pre-login banner on CVMs and AHV hosts
+
+Made by [**Guransh Deol**](https://github.com/guranshdeol)
